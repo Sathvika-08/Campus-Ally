@@ -14,45 +14,537 @@ Displays upcoming campus and GDG events using data from Firebase Firestore.
 🔐 Authentication
 Email-based sign-up/login using Firebase Authentication.
 
-Technologies Used
-React (frontend framework)
 
-Firebase Authentication (secure login)
+EXP 1: ***Analysing Android App Permissions and Mobile Traffic***
+✅ STEP 1: Install & Open Android Studio
+Open AVD Manager
+Create device (Pixel 2 / Pixel 9)
 
-Firebase Firestore (event data storage)
+👉 Start the emulator
 
-Google Gemini API (chatbot + wellness message generation)
+✅ STEP 2: Start Emulator with Proxy
 
-🚀 Getting Started
+Open Command Prompt:
 
-Follow these steps to run the project locally on your system.
-# 1. Clone the Repository
-```bash
-git clone https://github.com/your-username/campus-ally.git
-cd campus-ally
-```
+cd C:\Users\Admin\AppData\Local\Android\Sdk\emulator
+emulator -list-avds
 
-# 2. Install Dependencies
-```bash
-npm install
-```
+You’ll see:
 
-# 3. Set Up Environment Variables
-Create a .env file in the root directory and paste the following with your actual credentials:
+Pixel_2
+Pixel_9
 
-# 4. Start the Application (in 2 terminals)
-  Terminal 1 – Start the Genkit Gemini backend:
-  ```bash
-  npm run genkit:dev
-  ```
-  Terminal 2 – Start the React frontend (Vite):
-  ```bash
-  npm run dev
-  ```
-# 5. Access the App
+Run:
+
+emulator -avd Pixel_9 -http-proxy http://10.0.2.2:8080
+
+💡 Important:
+
+10.0.2.2 = your system (host machine)
+8080 = Burp Suite port
+✅ STEP 3: Setup Proxy in Emulator
+
+Inside emulator:
+
+Settings → Network → Internet → Edit → Advanced
+Proxy → Manual
+Hostname → 10.0.2.2
+Port → 8080
+
+👉 If NOT saving → use ADB:
+
+cd C:\Users\Admin\AppData\Local\Android\Sdk\platform-tools
+adb devices
+adb shell settings put global http_proxy 10.0.2.2:8080
+
+(Shown clearly in page 4 of your doc )
+
+✅ STEP 4: Setup Burp Suite
+
+Open Burp → Go to:
+
+Proxy → Options → Proxy Listeners
+Set:
+Port: 8080
+Interface: All interfaces
+
+Turn ON:
+
+Intercept ON
+✅ STEP 5: Test HTTP Traffic
+
+In emulator:
+
+Open Chrome
+Visit: http://example.com
+
+👉 In Burp:
+
+Go to HTTP History
+You will see requests
+
+✔️ SUCCESS → HTTP captured
+
+🔐 STEP 6: Capture HTTPS (IMPORTANT)
+
+By default:
+❌ HTTPS won’t show
+
+So we install certificate.
+
+🔹 Export Certificate from Burp
+Proxy → Options → Import/Export CA Certificate
+→ Save as burpcer.der
+🔹 Push to Emulator
+adb push C:\Users\Admin\Downloads\burpcer.cer /sdcard/Download/
+🔹 Install Certificate in Emulator
+
+Go to:
+
+Settings → Security → Encryption → Install Certificate → CA Certificate
+✅ STEP 7: Verify HTTPS
+
+Now:
+
+Open https://example.com
+
+👉 In Burp:
+
+Go to HTTP History
+
+✔️ You will now see HTTPS traffic
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+ EXP 2:***Testing IoT Device Security (Default Passwords & Open Ports)*** 
+✅ STEP 1: Run IoT Simulation (VERY IMPORTANT)
+
+Command:
+
+docker run -d -p 8090:3000 --name juiceshop bkimminich/juice-shop
+if not docker start juiceshop
+
+👉 What this does:
+
+Runs Juice Shop
+Makes it available at:
+http://localhost:8090
+
+
+✅ STEP 2: Get IP Address
+
+In Windows:
+
+ipconfig
+
+👉 Find:
+
+IPv4 Address → 192.168.x.x
+
+(Shown in page 3 image )
+
+✅ STEP 3: Scan using Nmap
+
+In Kali Linux:
+nmap localhost
+nmap -sV 192.168.x.x
+
+👉 What happens:
+
+Finds open ports
+Detects services
+Shows versions
+
+✔️ Example output (page 4 image):
+
+port 8090 → open
+service → HTTP
+✅ STEP 4: Analyze Scan Results
+
+From your doc (page 7):
+
+You will see:
+
+Open ports
+Service name
+Version info
+
+👉 This is called:
+
+Service Enumeration
+✅ STEP 5: Access Web Dashboard
+
+Open browser:
+
+http://localhost:8090
+
+👉 You’ll see Juice Shop UI (page 5 image)
+
+✅ STEP 6: Test Default Password
+
+Try login:
+
+admin credentials (default)
+
+👉 If login works → ❌ Vulnerability
+Email: admin@juice-sh.op
+Password: admin123
+✔️ Your doc shows:
+
+Successful login using default credentials (page 6)
+✅ STEP 7: Check Network Traffic
+
+Open:
+
+Developer Tools → Network tab
+
+👉 Observe:
+
+Requests in plain text
+No HTTPS
+
+✔️ Means:
+❌ Data is not secure
+
+
+
+EXP 3:***Creating and Analyzing Disk Images Using dc3dd and Autopsy (Alternative to FTK Imager)***
+***EVERYTHING TO BE DONE IN KALI LINUX***
+. EXECUTION (SUPER SIMPLIFIED)
+✅ STEP 1: Open Terminal
+Ctrl + Alt + T
+✅ STEP 2: Create Evidence File
+echo "Cybersecurity Lab Evidence" > evidence.txt
+ls
+
+👉 This file is your proof
+
+(page 3 shows this clearly )
+
+✅ STEP 3: Identify Disk
+lsblk
+
+👉 You’ll see:
+
+sda
+ ├─sda1
+
+✔️ Use /dev/sda1
+
+✅ STEP 4: Create Disk Image
+dd if=/dev/zero of=practice_disk.dd bs=1M count=100
+
+👉 Creates:
+
+100MB disk file
+
+(page 4 screenshot shows output )
+
+✅ STEP 5: Format Disk
+mkfs.ext4 practice_disk.dd
+
+👉 Makes it usable file system
+
+✅ STEP 6: Verify Image
+ls -lh /home/kali/disk_image.dd
+cat /home/kali/acquisition.log
+
+👉 Check:
+
+size
+hash
+logs
+
+(page 5 shows this )
+
+✅ STEP 7: Start Autopsy
+autopsy
+
+👉 Open browser:
+
+http://localhost:9999/autopsy
+
+(page 6–7 shows this )
+
+✅ STEP 8: Create Case
+
+In browser:
+
+Click Create New Case
+Enter details
+
+(page 7 screenshot)
+
+✅ STEP 9: Add Disk Image
+
+👉 Select:
+
+Add Host → Add Image
+
+Choose:
+
+/home/kali/disk_image.dd
+
+(page 8)
+
+✅ STEP 10: Analyze Evidence
+
+👉 You can:
+
+view files
+search keywords
+find deleted data
+
+(page 12–13 shows analysis UI)
+
+
+
+
+
+
+
+EXP 4:***NETWORK FORENSICS USING WIRESHARK***
+STEP 1: Open Wireshark
+
+👉 🟢 Kali Linux Terminal
+
+wireshark &
+✅ STEP 2: Select Interface
+
+👉 🔵 Wireshark GUI
+
+Select:
+eth0 
+
+✔️ This is your network interface (page 1 image)
+
+✅ STEP 3: Start Capturing
+
+👉 🔵 GUI
+
+Click Start (shark fin icon)
+
+👉 Now packets start capturing
+
+✅ STEP 4: Generate Traffic
+
+👉 🔵 Browser (inside Kali)
+
+Open any website:
+google.com
+youtube.com
+
+👉 This creates packets to analyze
+
+✅ STEP 5: Apply Filters
+
+👉 🔵 Wireshark filter bar
+
+Type:
+
+tcp
+
+👉 Shows only TCP packets
+
+Try:
+
+udp
+http
+
+✔️ (Shown in page 2 )
+
+✅ STEP 6: Filter by IP
+ip.addr == 192.168.x.x
+
+👉 Shows packets of specific IP
+
+OR:
+
+ip.src == 192.168.x.x
+
+✔️ Source filtering (page 3)
+
+✅ STEP 7: Follow TCP Stream
+
+👉 Right click any TCP packet:
+
+Follow → TCP Stream
+
+✔️ Shows full conversation
+
+🧠 What you observe (VERY IMPORTANT)
+Red → sender
+Blue → receiver
+Shows full communication
+
+(page 4 explanation )
+
+✅ STEP 8: Detect Suspicious Traffic
+
+👉 🟢 Kali Terminal:
+
+nmap -sS <target_IP>
+target_IP can be given our ip
+👉 Then in Wireshark filter:
+
+tcp.flags.syn == 1 && tcp.flags.ack == 0
+
+✔️ Detects port scanning (page 5)
+
+✅ STEP 9: Statistics Analysis
+
+👉 🔵 Wireshark menu:
+
+Statistics → Capture File Properties
+Statistics → Protocol Hierarchy
+Statistics → Conversations
+Statistics → Endpoints
+✅ STEP 10: Graphs
+
+👉 🔵 Wireshark:
+
+Statistics → I/O Graphs
+
+✔️ Shows traffic over time
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+exp:5***LOG FILE ANALYSIS FOR INCIDENT DETECTION LAB*** 
+
+IMPORTANT RULE
+
+👉 Everything is done in:
+🟢 Kali Linux Terminal (NOT Windows CMD)
+
+✅ STEP 1: Go to Logs Folder
+
+👉 🟢 Kali Terminal
+
+cd /var/log
+ls
+
+👉 You’ll see:
+
+apache2
+nginx
+journal
+wtmp, btmp
+
+(page 1–2 )
+
+✅ STEP 2: Check Successful Logins
+last
+
+👉 Shows login history
+
+✅ STEP 3: View System Logs
+journalctl | less
+
+👉 Scroll logs
+
+✅ STEP 4: Find Failed Logins
+journalctl | grep "Failed"
+
+👉 Shows failed attempts
+
+(page 3)
+
+✅ STEP 5: Check SSH Activity
+journalctl | grep ssh
+
+👉 Shows login attempts
+
+✅ STEP 6: Find Errors
+journalctl | grep -i error
+
+👉 Detect abnormal behavior
+
+✅ STEP 7: Apache Log Analysis
+cd /var/log/apache2
+ls
+sudo less access.log
+
+👉 Shows web activity
+
+✅ STEP 8: Detect Suspicious Requests
+grep "404" /var/log/apache2/access.log
+
+👉 Many 404 → scanning attack
+
+✅ STEP 9: Real-Time Monitoring
+sudo journalctl -f
+
+👉 Live logs
+
+🔥 IMPORTANT PART (SCORING)
+✅ STEP 10: Simulate Attack (VERY IMPORTANT)
+
+👉 🟢 Kali Terminal
+
+Start SSH:
+
+sudo service ssh start
+
+Get IP:
+
+ip a
+✅ STEP 11: Generate Failed Logins
+ssh fakeuser@localhost
+
+👉 Enter wrong password multiple times
+
+(page 9 )
+
+✅ STEP 12: Analyze Failed Attempts
+journalctl | grep "Failed password"
+
+👉 Output like:
+
+Failed password for kali from 127.0.0.1
+✅ STEP 13: Extract Suspicious IP
+journalctl | grep "Failed password" | awk '{print $11}'
+
+👉 Output:
+
+127.0.0.1
+✅ STEP 14: Count Attempts
+journalctl | grep "Failed password" | awk '{print $11}' | sort | uniq -c | sort -nr
+
+👉 Example:
+
+10 127.0.0.1
+
+✔️ Means attack from that IP
+
+✅ STEP 15: Alternative Method
+sudo lastb
+
+👉 Shows failed login records
