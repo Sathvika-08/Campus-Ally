@@ -548,3 +548,248 @@ journalctl | grep "Failed password" | awk '{print $11}' | sort | uniq -c | sort 
 sudo lastb
 
 👉 Shows failed login records
+
+
+
+
+
+      EXP:6 ***Privacy Audit + Data Breach Analysis***
+
+
+
+   PART 1: WhatsApp Privacy Audit
+✅ STEP 1: Install Node.js
+
+👉 🟢 Kali Terminal
+
+sudo apt update
+sudo apt install nodejs npm -y
+✅ STEP 2: Install Nativefier
+
+👉 🟢 Kali Terminal
+
+sudo npm install -g nativefier
+✅ STEP 3: Create WhatsApp Desktop
+
+👉 🟢 Kali Terminal
+
+nativefier https://web.whatsapp.com
+
+👉 Creates folder (shown page 3 )
+
+✅ STEP 4: Run WhatsApp
+
+👉 🟢 Kali Terminal
+
+cd WhatsAppWeb-linux-x64
+./WhatsAppWeb
+
+👉 Scan QR → login
+
+✅ STEP 5: Analyze Trackers
+
+👉 🔵 Browser (Kali)
+
+Go to:
+
+https://reports.exodus-privacy.eu.org
+
+Search:
+👉 WhatsApp
+
+👉 You’ll see:
+
+trackers
+permissions
+
+(page 6)
+
+✅ STEP 6: Start Wireshark
+
+👉 🟢 Kali Terminal
+
+wireshark &
+
+👉 Select interface (eth0)
+
+✅ STEP 7: Generate Traffic
+
+👉 🔵 WhatsApp App
+
+Send messages
+Send images
+✅ STEP 8: Apply Filters
+
+👉 🔵 Wireshark
+
+tls
+dns
+🔍 OBSERVATION (VERY IMPORTANT)
+
+From page 9 :
+
+Traffic is encrypted (TLS)
+Domains:
+whatsapp.net
+facebook.com
+Message content NOT visible
+
+
+
+
+***EXP 7: Security Audit & Risk Assessment***
+
+
+🚨 IMPORTANT RULE
+
+👉 This experiment is done in:
+🟣 Windows OS (NOT Kali Linux)
+
+✅ STEP 1: System Information
+
+👉 🟣 Windows Run
+
+Press:
+
+Windows + R
+
+Type:
+
+msinfo32
+
+👉 Note:
+
+OS version
+system type
+
+(page 1–2 )
+
+✅ STEP 2: Check Windows Updates
+
+👉 🟣 Windows Settings
+
+Settings → Windows Update
+Click Check for updates
+
+✔ Observation:
+
+updates pending = risk
+
+(page 3)
+
+✅ STEP 3: Check Firewall
+
+👉 🟣 Windows Search
+
+Search:
+
+Windows Defender Firewall
+
+Check:
+
+ON / OFF
+
+✔ Your doc says:
+
+managed by Kaspersky (page 4)
+✅ STEP 4: Check Antivirus
+
+👉 🟣 Windows Security
+
+Virus & Threat Protection
+
+Check:
+
+Real-time protection → ON
+Last scan
+
+✔ Shows system is protected (page 5)
+
+✅ STEP 5: Account Security
+
+👉 🟣 Settings
+
+Accounts → Sign-in options
+
+Check:
+
+Password
+PIN / Windows Hello
+
+(page 6–7)
+
+✅ STEP 6: Installed Applications
+
+👉 🟣 Settings
+
+Apps → Installed apps
+
+Check:
+
+unknown apps
+cracked software
+✅ STEP 7: Startup Programs
+
+👉 🟣 Task Manager
+
+Press:
+
+Ctrl + Shift + Esc
+
+Go:
+
+Startup tab
+
+Disable:
+
+unknown apps
+✅ STEP 8: Network Security
+
+👉 🟣 Settings
+
+Network & Internet
+
+Check:
+
+WiFi
+Network type
+
+✔ Your doc:
+
+Public network (page 11)
+✅ STEP 9: Browser Security
+
+👉 🟣 Chrome / Edge
+
+Settings → Privacy & Security
+
+Check:
+
+Safe browsing ON
+remove unknown extensions
+✅ STEP 10: Backup
+
+👉 🟣 Windows Search
+
+Search:
+
+Backup settings
+
+Check:
+
+OneDrive backup
+
+✔ Observation:
+
+not configured (page 14)
+
+IMPORTANT PART (EXAM SCORING)
+📊 Risk Assessment Table
+
+From page 14 :
+
+Asset	Threat	Vulnerability	Risk	Solution
+Files	Data loss	No backup	High	Enable backup
+System	Malware	Unknown apps	High	Remove apps
+Network	Hacking	Public network	Medium	Use private
+Account	Unauthorized access	Weak password	High	Strong password
